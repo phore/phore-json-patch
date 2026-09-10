@@ -1,7 +1,7 @@
 {
-  "name": "phore/project",
+  "name": "phore/json-patch",
   "type": "library",
-  "description": "",
+  "description": "Atomic RFC 6902 JSON Patch and RFC 6901 JSON Pointer for PHP, with stable-ID array views, limits and conflict protection.",
   "license": "MIT",
   "authors": [
     {
@@ -11,27 +11,40 @@
   ],
   "autoload": {
     "psr-4": {
-      "Phore\\FileSystem\\": "src/"
-    },
-    "files": [
-      "src/functions.php"
-    ]
+      "Phore\\JsonPatch\\": "src/"
+    }
   },
   "require": {
-    "php" : ">=8.3",
-    "ext-yaml": "*",
+    "php": ">=8.5",
     "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^13.2.2"
   },
-  "suggest": {
-  },
   "config": {
-    "preferred-install": "source",
-    "allow-plugins": {
-      "php-http/discovery": false
-    }
+    "preferred-install": "dist",
+    "sort-packages": true
   },
-  "minimum-stability": "dev"
+  "keywords": [
+    "json",
+    "json-patch",
+    "json-pointer",
+    "rfc6902",
+    "rfc6901",
+    "atomic",
+    "stable-id"
+  ],
+  "homepage": "https://github.com/phore/phore-json-patch",
+  "support": {
+    "issues": "https://github.com/phore/phore-json-patch/issues",
+    "source": "https://github.com/phore/phore-json-patch"
+  },
+  "scripts": {
+    "test": "phpunit -c phpunit.xml.dist",
+    "examples": [
+      "@php examples/basic-patch.php",
+      "@php examples/atomic-failure.php",
+      "@php examples/stable-arrays.php"
+    ]
+  }
 }

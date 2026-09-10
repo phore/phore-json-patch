@@ -55,3 +55,6 @@ Desktop.ini
 $RECYCLE.BIN/
 .Trashes/
 
+
+# PHPUnit generated cache
+/.phpunit.cache/
