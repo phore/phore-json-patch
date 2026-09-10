@@ -1,16 +1,29 @@
 name: tests
 
-on: [push]
+on: [push, pull_request]
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-    
+    container:
+      image: php:8.5-cli
     steps:
-    - uses: actions/checkout@v1
-    - name: Download kickstart
-      run: curl -o ./kickstart.sh 'https://raw.githubusercontent.com/nfra-project/nfra-kickstart/master/dist/kickstart.sh' && chmod +x ./kickstart.sh
-    - name: UnitTests
-      run: ./kickstart.sh :test
-  
+      - uses: actions/checkout@v4
+      - name: Install Composer
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends git unzip
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+          rm composer-setup.php
+      - name: Validate package
+        run: composer validate --strict
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Unit tests
+        run: composer test
+      - name: Executable examples
+        run: composer examples
